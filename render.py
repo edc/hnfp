@@ -19,16 +19,36 @@ def render(inp, out, template=TEMPLATE):
             else:
                 buf.append(line)
         data[tag] = ''.join(buf)
-    print data
+
+    with open(out, 'w') as outf:
+        with open(template) as f:
+            post_tag = False
+            for line in f:
+                m = tag_re.match(line)
+                if m:
+                    tag = m.group(1).strip()
+                    if tag in data:
+                        outf.write(data[tag])
+                        post_tag = True
+                else:
+                    if post_tag and re.match(r'^[^\s]', line):
+                        # skip placeholder data
+                        pass
+                    else:
+                        post_tag = False
+                        outf.write(line)
+                   
+                  
+
 
 
 if __name__ == '__main__':
     import sys
     if len(sys.argv) != 2 or not sys.argv[1].endswith('.out'):
-        sys.stderr.write("Usage: %s data.out" % sys.argv[0])
+        sys.stderr.write("Usage: %s data.out\n" % sys.argv[0])
         sys.exit(1)
 
     inp = sys.argv[1]
-    prefix = inp[:len('.out')]
+    prefix = inp[:-len('.out')]
     out = prefix + '.html'
     render(inp, out)
