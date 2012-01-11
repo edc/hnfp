@@ -9,18 +9,12 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <!--
-  <script src="http://raphaeljs.com/raphael.js" type="text/javascript"></script>
+  <script src="./lib/raphael.js" type="text/javascript"></script>
   <script src="https://raw.github.com/DmitryBaranovskiy/g.raphael/master/min/g.raphael-min.js"></script>
   <script src="https://raw.github.com/DmitryBaranovskiy/g.raphael/master/min/g.line-min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    -->
-<script src="jquery.js" type="text/javascript"></script>
-<script src="raphael.js" type="text/javascript"></script>
-<script src="g.raphael.js" type="text/javascript"></script>
   <!-- Le styles -->
-  <!--<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">-->
-<link rel="stylesheet" href="bootstrap.css">
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
   <style type="text/css">
     .hero-unit h1 + p {
       margin-top: 20px;
@@ -103,13 +97,13 @@
     <h1>Hacker News in Review</h1>
     <p>I have been using <a href="http://api.ihackernews.com/">Hacker News API</a> to take snapshots of Hacker News front page stories for a while. I thought I could put the HN front page data to better use and see how the second half of 2011 looked like from a HN community perspective. What word would best describe this period of time? How fast can a trending topic become really trending on HN? And less interestingly, is this community mostly night owls?
     </p>
-    <p>The code and data are both on github. So also feel free to roll out your own analysis and share with us.</p>
+    <p>The code and data are both on <a href="http://github.com/edc/hnfp">github</a>. So also feel free to roll out your own analysis and share with us.</p>
     </div>
 
     <div class="row">
     <div class="span16">
       <h3>Data</h3>
-      <p>The data used here are snapshots of the HN front page stories taken at an interval of 20 minutes using <a href="http://api.ihackernews.com/">Hacker News API</a> from early August of 2011 till the end of 2011. You could find a copy of the MongoDB dump and code used to generate tables on this page on the github page.</p>
+      <p>The data used here are snapshots of the HN front page stories taken at an interval of 20 minutes using <a href="http://api.ihackernews.com/">Hacker News API</a> from early August of 2011 till the end of 2011. You could find a copy of the MongoDB dump and code used to generate tables on this page on the <a href="http://github.com/edc/hnfp">github page</a>.</p>
     </div>
     <div class="span16">
       <h3>Most Upvoted</h3>
