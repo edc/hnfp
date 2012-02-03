@@ -4,7 +4,7 @@
 all: index.html
 
 dbrestore:
-	mongorestore hn/dump
+	mongorestore dump
 
 index.out:
 	mongo hn_db --quiet hn-stat.mongo.js > $@

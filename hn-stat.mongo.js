@@ -17,8 +17,8 @@ var print_top = function(options) {
 };
 
 // time-based base query factory
-var time_range = {$gt:ISODate("2011-08-04T07:00:00.000Z"),
-  $lt:ISODate("2012-01-01T08:00:00.000Z")};
+var time_range = {$gt:ISODate("2012-01-01T00:00:00.000Z"),
+  $lt:ISODate("2012-02-01T00:00:00.000Z")};
 var base = function(query) {
   query = query || {};
   query.time = query.time || time_range;
@@ -26,16 +26,33 @@ var base = function(query) {
 };
 
 // most upvoted
+base().forEach(function(entry) {
+  db.temp.save({
+    _id: entry._id,
+    title: entry.title,
+    points: entry.points.slice(-1)[0],
+  });
+});
 print_top({
   title: 'most upvoted',
+  query: db.temp.find(),
   sort_term: {'points':-1},
-  result_formatter: function() {return this.points.slice(-1)[0];}
+  result_formatter: function() {return this.points;}
 });
+db.temp.drop();
 // most commented
+base().forEach(function(entry) {
+  db.temp.save({
+    _id: entry._id,
+    title: entry.title,
+    commentCount: entry.commentCount.slice(-1)[0],
+  });
+});
 print_top({
   title: 'most commented',
+  query: db.temp.find(),
   sort_term: {'commentCount':-1},
-  result_formatter: function() {return this.commentCount.slice(-1)[0];}
+  result_formatter: function() {return this.commentCount;}
 });
 
 // climb time
@@ -62,7 +79,7 @@ print_top({
   query: db.temp.find({climbTime:{$gt:1}}),
   sort_term: {'climbTime':1},
   result_formatter: function() {
-    return this.climbTime / 1000 / 60 + '<span data-sparkline="[' +
+    return Math.round(this.climbTime / 1000 / 60) + '<span data-sparkline="[' +
       this.points + ']"></span>';
   }
 });
@@ -77,7 +94,7 @@ print_top({
   title: 'longest shelf life',
   query: db.temp.find(),
   sort_term: {'span':-1},
-  result_formatter: function() {return this.span / 1000 / 3600 / 24;}
+  result_formatter: function() {return (this.span / 1000 / 3600 / 24).toFixed(1);}
 });
 db.temp.drop();
 
@@ -95,27 +112,6 @@ print_top({
   query: db.temp.find(),
   sort_term: {'gap':-1},
   result_formatter: function() {return this.gap;}
-});
-db.temp.drop();
-
-// noteworthy no-comment
-base().forEach(function(entry) {
-  var p = entry.points.slice(-1)[0];
-  var c = entry.commentCount.slice(-1)[0];
-  ratio = c === 0 ? 0 : p/c;
-  db.temp.save({
-    _id:entry._id,
-    ratio:ratio,
-    points:entry.points.slice(-1)[0],
-    commentCount:entry.commentCount.slice(-1)[0],
-    title:entry.title
-  });
-});
-print_top({
-  title: 'noteworthy no-comment',
-  query: db.temp.find(),
-  sort_term: {'ratio':-1},
-  result_formatter: function() {return this.points + ":" + this.commentCount;}
 });
 db.temp.drop();
 
